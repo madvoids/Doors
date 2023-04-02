@@ -1,0 +1,369 @@
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Rayfield/main/source'))()
+
+
+local Window = Rayfield:CreateWindow({
+       Name = "Void DOORS Hub V1 👁",
+   LoadingTitle = "DOORS 👁 Scripts",
+   LoadingSubtitle = "Loading...",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil,
+      FileName = "doors"
+   }
+})
+
+local Tab = Window:CreateTab("Main", 4483362458)
+
+local Section = Tab:CreateSection("DOORS")
+
+local Button = Tab:CreateButton({
+    Name = "Poopdoors Edited",
+    Callback = function()
+        loadstring(game:HttpGet(("https://raw.githubusercontent.com/mstudio45/poopdoors_edited/main/poopdoors_edited.lua"),true))()
+    end,
+ })
+
+
+ local Button1 = Tab:CreateButton({
+   Name = "Vynixious Hub",
+   Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Vynixius/main/Doors/Loader.lua"))()
+   end,
+})
+
+local Button2 = Tab:CreateButton({
+Name = "OminousVibes Hub",
+   Callback = function()
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/OminousVibes-Exploit/Scripts/main/doors/loadstring.lua"))()
+     
+   end,
+})
+
+local Section1 = Tab:CreateSection("Other")
+
+local Button3 = Tab:CreateButton({
+   Name = "Noclip + Anticheat Bypasser",
+      Callback = function()
+         _G.Keybind = "R"
+         _G.ClipGui = true
+         _G.IncludeNoclip = true
+
+         local isEnabled = false
+
+         local UIS = game:GetService("UserInputService")
+
+         local Plr = game.Players.LocalPlayer
+         local Char = Plr.Character or Plr.CharacterAdded:Wait()
+
+         local ScreenGui = Instance.new("ScreenGui")
+         ScreenGui.Parent = game.CoreGui
+         ScreenGui.Enabled = _G.ClipGui or false
+
+         local TextLabel = Instance.new("TextLabel")
+         TextLabel.Parent = ScreenGui
+         TextLabel.Font = Enum.Font.Oswald
+
+         TextLabel.AnchorPoint = Vector2.new(1, 0)
+         TextLabel.TextColor3 = Color3.fromRGB(255, 222, 189)
+         TextLabel.Position = UDim2.new(1, -5, 0, 0)
+         TextLabel.Text = "Noclip + Bypasser: Off"
+         TextLabel.Size = UDim2.new(0,200,0,75)
+         TextLabel.TextScaled = true
+         TextLabel.BackgroundTransparency = 1
+
+         function getValue()
+            local value
+            if isEnabled then
+               value = "On"
+            else
+               value = "Off"
+            end
+            return value
+         end
+
+         UIS.InputBegan:Connect(function(input, gp)
+            if gp then return end
+
+            if input.KeyCode == Enum.KeyCode[_G.Keybind] then
+               isEnabled = not isEnabled
+               task.wait()
+               TextLabel.Text = "Noclip + Bypasser: " .. getValue()
+            end
+         end)
+
+         game:GetService("RunService").RenderStepped:Connect(function()
+            if not Char:FindFirstChild("HumanoidRootPart") then return end
+            if _G.IncludeNoclip then
+               Char.HumanoidRootPart.CanCollide = not isEnabled
+               Char.Collision.CanCollide = not isEnabled
+            end
+
+            local HrpCFrame = Char.HumanoidRootPart.CFrame
+
+            local ray = Ray.new(HrpCFrame.Position, HrpCFrame.LookVector * 0.5)
+            local part = workspace:FindPartOnRay(ray)
+            if part and part.CanCollide == true and isEnabled then
+               Char.HumanoidRootPart.Anchored = true
+               Char:PivotTo(Char.HumanoidRootPart.CFrame * CFrame.new(0, 1000, 0))
+               task.wait()
+               Char:PivotTo(Char.HumanoidRootPart.CFrame * CFrame.new(0, 0, -4))
+               task.wait()
+               Char:PivotTo(Char.HumanoidRootPart.CFrame * CFrame.new(0, -1000, 0))
+               task.wait(0.1)
+               Char.HumanoidRootPart.Anchored = false
+            end
+         end)
+      end,
+   })
+   
+   local ButtonHinfy = Tab:CreateButton({
+        Name = "Infinite Yield",
+             Callback = function()
+                  loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+               end,
+            })
+
+local Tab2 = Window:CreateTab("For Fun", 4483362458)
+
+local Section2 = Tab2:CreateSection("Just for fun")
+
+local Button5 = Tab2:CreateButton({
+   Name = "Lobby Achievement Spammer",
+      Callback = function()
+         local showAchievement = game.ReplicatedStorage.EntityInfo.FlexAchievement
+         local achievements = {}
+         for _, v in ipairs(game.Players.LocalPlayer.PlayerGui.MainUI.LobbyFrame.Achievements.List:GetChildren()) do
+            if v:IsA("ImageButton") then
+               table.insert(achievements, v.Name)
+            end
+         end
+
+         local n = 5
+         game:GetService("RunService"):BindToRenderStep("spam achievements", 1, function()
+            showAchievement:FireServer(achievements[math.random(1, #achievements)])
+            n = (n+1) % #achievements + 1
+         end)        
+      end,
+   })
+
+   local Button6 = Tab2:CreateButton({
+      Name = "Become Small",
+         Callback = function()
+            local player = game.Players.LocalPlayer
+            local mouse = player:GetMouse()
+            local SizeChange = -4
+
+                  for i,v in pairs(player.Character:GetChildren()) do
+                        if v:IsA("Part") then
+                           v.Size = Vector3.new(v.Size.X + SizeChange, v.Size.Y + SizeChange, v.Size.Z + SizeChange)
+                        end
+                        if v:IsA("MeshPart") then
+                           v.Size = Vector3.new(v.Size.X + SizeChange, v.Size.Y + SizeChange, v.Size.Z + SizeChange)
+                        end
+                  end
+
+                  task.spawn(function()
+               game:GetService("RunService").RenderStepped:Connect(function()
+                  workspace.CurrentCamera.CFrame = (game.Players.LocalPlayer.Character.Head.CFrame * CFrame.Angles(math.rad(0),0,0)) * CFrame.new(0,-4,0)
+               end)
+            end)
+         end,
+      })
+   
+      local Button7 = Tab2:CreateButton({
+         Name = "Chrono's Morph Script",
+            Callback = function()
+               loadstring(game:HttpGet("https://raw.githubusercontent.com/ChronoAccelerator/Public-Scripts/main/Morphing/MorphScript.lua"))();
+            end,
+         })
+
+     local ButtonHardcore = Tab2:CreateButton({
+        Name = "Hardcore Mode (EXECUTE IN ELEVATOR)",
+             Callback = function()
+                  loadstring(game:HttpGet("https://pastebin.com/raw/DKePjj8S"))()
+               end,
+            })
+        
+        local anyMorph = Tab2:CreateButton({
+        Name = "Become Anything",
+             Callback = function()
+                  -- Made By Nerd
+                  -- Youtube = https://www.youtube.com/@MrNeRD_x
+                  loadstring(game:HttpGet("https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/BeEverything.lua"))()
+               end,
+            })
+        local newLabel = Tab2:CreateLabel("Press R on pc and Click on mobile to become anything.")
+
+local Tab1 = Window:CreateTab("Items", 4483362458)
+
+local Section3 = Tab1:CreateSection("Items")
+
+local Button8 = Tab1:CreateButton({
+   Name = "Shears On Everything",
+      Callback = function()
+         local Tool = game:GetObjects("rbxassetid://12685165702")[1]
+         local Humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+         local Sound = Instance.new("Sound")
+         
+         Tool.Parent = game.Players.LocalPlayer.Backpack
+         
+         Sound.PlaybackSpeed = 1.25
+         Sound.SoundId = "rbxassetid://9118823101"
+         Sound.Parent = Tool
+         
+         Tool.Activated:Connect(function()
+             local Use = Tool.Animations.use
+             local UseTrack = Humanoid:LoadAnimation(Use)
+         
+             UseTrack:Play()
+             Sound:Play()
+             wait(0.25)
+             Sound:Play()
+             game:GetService("Players").LocalPlayer:GetMouse().Target:FindFirstAncestorOfClass("Model"):Destroy()
+         end)
+         
+         Tool.Equipped:Connect(function()
+             local Idle = Tool.Animations.idle
+             local IdleTrack = Humanoid:LoadAnimation(Idle)
+         
+             IdleTrack:Play()
+         end)     
+      end,
+   })
+
+   local Button9 = Tab1:CreateButton({
+      Name = "Infinite Vitamins",
+         Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/MrNeRD0/Doors-Hack/main/Inf_Vitamins.lua"))()
+         end,
+      })
+
+      local Button10 = Tab1:CreateButton({
+         Name = "Rooms Tablet",
+            Callback = function()
+               _G.UpdateStars = true
+               _G.OnShop = true
+               _G.Price = 10
+               _G.Description = "Helps you find keys, levers, books, etc."
+               loadstring(game:HttpGet('https://raw.githubusercontent.com/DeividComSono/Scripts/main/Scanner.lua'))()        
+            end,
+         })
+
+         local Button11 = Tab1:CreateButton({
+            Name = "Crucifix On Anything (Success)",
+               Callback = function()
+                  _G.Uses = 1000000
+                  _G.Range = 30
+                  _G.OnAnything = true
+                  _G.Fail = false
+                  loadstring(game:HttpGet('https://raw.githubusercontent.com/PenguinManiack/Crucifix/main/Crucifix.lua'))()                 
+               end,
+            })
+
+            local Button12 = Tab1:CreateButton({
+               Name = "Crucifix On Anything (Fail)",
+                  Callback = function()
+                     _G.Uses = 1000000
+                     _G.Range = 30
+                     _G.OnAnything = true
+                     _G.Fail = true
+                     loadstring(game:HttpGet('https://raw.githubusercontent.com/PenguinManiack/Crucifix/main/Crucifix.lua'))()                 
+                  end,
+               })
+
+            local ButtonGun = Tab1:CreateButton({
+                  Name = "Gun",
+                     Callback = function()
+                        local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))()
+                        local CustomShop = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Shop%20Items/Source.lua"))()
+                        local UIS = game:GetService("UserInputService")
+                        local exampleTool = LoadCustomInstance("rbxassetid://12848567274") -- wand model
+
+                        if game:GetService("Players").LocalPlayer.PlayerGui.MainUI.ItemShop.Visible == true then
+                           -- Create custom shop item
+                           CustomShop.CreateItem(exampleTool, {
+                              Title = "Harry Potter Wand",
+                              Desc = "Works on entities",
+                              Image = "https://cdn.discordapp.com/attachments/1049016956231102465/1078727375631679688/image_2023-02-24_121721211-removebg-preview.png",
+                              Price = "gun",
+                              Stack = 1,
+                           })
+                           ----------------------------------------- parenting
+                        else
+                           exampleTool.Parent = game.Players.LocalPlayer.Backpack
+                        end
+                        local tool = exampleTool
+                        local function Shoot()
+                           local bullet = game:GetObjects("rbxassetid://12848374097")[1]
+                           task.wait()
+                           bullet.Anchored = false
+                           bullet.Massless = false
+                           local Sound = Instance.new("Sound", game.StarterPlayer)
+                           Sound.Volume = 3.5
+                           Sound.SoundId = "rbxassetid://5238024665"
+                           Sound.PlayOnRemove = true
+                           Sound:Destroy()
+                           HRP = exampleTool.BulletPart.CFrame * CFrame.Angles(0,math.rad(-90),0)
+                           local Attachment = Instance.new("Attachment", bullet)
+                           local LV = Instance.new("LinearVelocity", Attachment) -- creating the linear velocity
+                           LV.MaxForce = math.huge -- no need to worry about this
+                           LV.VectorVelocity = (game:GetService("Players").LocalPlayer:GetMouse().Hit.Position - tool.BulletPart.Position).Unit * 100-- HRP.lookVector * 50 -- change 100 with how fast you want the projectile to go
+                           LV.Attachment0 = Attachment --Required Attachment
+                           bullet.Parent = game.Workspace
+                           bullet.CFrame = tool.BulletPart.CFrame * CFrame.Angles(math.rad(0),math.rad(90),math.rad(90))
+                           bullet.Touched:Connect(function(part)
+                              local Model = part:FindFirstAncestorWhichIsA("Model")
+                              if Model ~= nil and Model:GetAttribute("IsCustomEntity") == true then
+                                    Model:Destroy()
+                              end
+                           end)
+                           task.wait(0.3)
+                           bullet:Destroy()
+                           end
+                        ----------------------------------------------- Shooting!
+                           
+                        UIS.InputBegan:Connect(function(input)
+                           if tool.Parent == game.Players.LocalPlayer.Character then
+                              if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                              getgenv().BulletType = "12848374097"
+                              Shoot()
+                              
+                              end
+                           end
+                        end)        
+                     end,
+                  })
+
+            local ButtonLockpick = Tab1:CreateButton({
+                
+                     Name = "Infinite Lockpick Uses",
+                        Callback = function()
+                            local player = game.Players.LocalPlayer
+                           local lockpickingObject = player.Character and player.Character:FindFirstChild("Lockpick") or player.Character and player.Character:FindFirstChild("Lockpick")
+                            if not lockpickingObject or typeof(lockpickingObject) ~= "Instance" then
+                               warn("Code error: Lockpicking object not found or wrong data type. Code will not run.")
+                               return
+                            end
+    
+                            local properties = {"ToolHandlerServer"}
+                            for _, property in ipairs(properties) do
+                               local propertyValue = lockpickingObject[property]
+                               if propertyValue and propertyValue.Destroy then
+                                  propertyValue:Destroy()
+                               end
+                            end
+                        end,
+                     })
+           
+        local LMustread = Tab1:CreateLabel("You must have the lockpick and holding it before executing the inf lockpick.")
+
+        local TabC = Window:CreateTab("Credits", 4483362458)
+        
+        local Label = TabC:CreateLabel("Poopdoors Edited by mstudio45#5590")
+        local Label1 = TabC:CreateLabel("Vynixious Hub by Vynixu")
+        local Label2 = TabC:CreateLabel("OminousVibes Hub by TerminalVibes")
+        local Label3 = TabC:CreateLabel("Noclip + Bypasser and Rooms Tablet by Deivid#9999")
+        local Label4 = TabC:CreateLabel("Become Small, Shears, Gun, and Crucifix by PenguinManiack")
+        local Label5 = TabC:CreateLabel("Hardcore script by Noonie Loafer")
+        local Label6 = TabC:CreateLabel("Chrono's morph script by Chrono")
+        local Label7 = TabC:CreateLabel("Infinite Vitamins and Become Anything by NeRD#0950")
