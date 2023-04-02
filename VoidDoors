@@ -334,12 +334,11 @@ local Button8 = Tab1:CreateButton({
                      end,
                   })
 
-            local ButtonLockpick = Tab1:CreateButton({
-                
+            local ButtonLockpick = Tab1:CreateButton({     
                      Name = "Infinite Lockpick Uses",
                         Callback = function()
                             local player = game.Players.LocalPlayer
-                           local lockpickingObject = player.Character and player.Character:FindFirstChild("Lockpick") or player.Character and player.Character:FindFirstChild("Lockpick")
+                           local lockpickingObject = player.Character and player.Character:FindFirstChild("Lockpick")
                             if not lockpickingObject or typeof(lockpickingObject) ~= "Instance" then
                                warn("Code error: Lockpicking object not found or wrong data type. Code will not run.")
                                return
